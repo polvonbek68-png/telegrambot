@@ -1,15 +1,20 @@
 import asyncio
+import os
+from dotenv import load_dotenv
 from aiogram import Bot, Dispatcher, types, F
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton
 
+# .env ni yuklash
+load_dotenv()
+
 # Ma'lumotlar
-API_TOKEN = '8792355224:AAHvqotc-jeby0QFdrrxyuzWMBP6OwF1fvQ'
+
 ADMIN_ID = 8158481112
 
-bot = Bot(token=API_TOKEN)
+bot = Bot(token=os.getenv("API_TOKEN"))
 dp = Dispatcher()
 
 # Holatlar (States)
@@ -120,6 +125,7 @@ async def process_decision(callback: types.CallbackQuery):
     await callback.message.delete()
 
 async def main():
+    print("Bot ishladi")
     await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot)
 
